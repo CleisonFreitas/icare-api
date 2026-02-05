@@ -15,4 +15,9 @@ enum PetTamanhoEnum: string
             self::GRANDE => 'Grande'
         };
     }
+
+    public static function toValues(): array
+    {
+        return array_map(fn($enum) => $enum->value, self::cases());
+    }
 }

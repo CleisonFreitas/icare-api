@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Cliente;
 
+use App\Enums\Pet\PetTamanhoEnum;
 use App\Models\Cliente\Cliente;
 use App\Models\Cliente\Especie;
 use App\Models\Cliente\Pet;
@@ -17,7 +18,7 @@ class PetFactory extends Factory
         return [
             'nome' => $this->faker->name,
             'documento' => $this->faker->numerify('#######'),
-            'size' => $this->faker->randomElement(['BAIXO', 'MEDIO', 'ALTO']),
+            'tamanho' => $this->faker->randomElement(PetTamanhoEnum::cases()),
             'cor' => $this->faker->colorName,
             'especie_id' => Especie::factory()->lazy(),
             'cliente_id' => Cliente::factory()->lazy(),

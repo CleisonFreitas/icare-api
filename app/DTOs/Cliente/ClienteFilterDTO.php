@@ -19,7 +19,7 @@ class ClienteFilterDTO
         $dados = $request->validated();
         return new self(
             filtros: collect($dados)->except(['ordenacoes', 'limite'])->toArray(),
-            ordenacoes: data_get($dados, 'ordenacoes', []),
+            ordenacoes: $dados['ordenacoes'] ?? [],
             limite: data_get($dados, 'per_page', 15)
         );
     }

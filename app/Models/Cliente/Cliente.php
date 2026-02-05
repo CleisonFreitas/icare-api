@@ -26,7 +26,7 @@ class Cliente extends Authenticatable
         'senha'
     ];
 
-    public function modelFilter()
+    public function modelFilter(): string
     {
         return $this->provideFilter(ClienteFilter::class);
     }
