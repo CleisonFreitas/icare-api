@@ -14,7 +14,7 @@ class ClienteFilterDTO
         private readonly int $limite
     ) {}
 
-    public static function fromApirequest(ClienteSearchRequest $request): self
+    public static function fromApiRequest(ClienteSearchRequest $request): self
     {
         $dados = $request->validated();
         return new self(

@@ -23,7 +23,7 @@ readonly final class ClienteController
 {
     public function index(ClienteSearchRequest $request, BuscarClientes $service): JsonResponse
     {
-        $resposta = $service->pesquisar(ClienteFilterDTO::fromApirequest($request));
+        $resposta = $service->pesquisar(ClienteFilterDTO::fromApiRequest($request));
         return ClienteResource::collection($resposta)->toResponse($request);
     }
 

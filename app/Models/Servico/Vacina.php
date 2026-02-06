@@ -6,6 +6,7 @@ use App\Models\Usuario\Usuario;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Vacina extends Model
@@ -19,7 +20,6 @@ class Vacina extends Model
         'nome',
         'data_administrada',
         'aplicado_por',
-        'lote',
         'fabricante',
         'dosagem',
         'servico_id',
@@ -33,5 +33,12 @@ class Vacina extends Model
     public function servico(): BelongsTo
     {
         return $this->belongsTo(Servico::class);
+    }
+
+    public function estoques(): BelongsToMany
+    {
+        return $this->belongsToMany(Estoque::class, 'estoque_has_vacinas')
+            ->withPivot('quantidade', 'lote')
+            ->withTimestamps();
     }
 }

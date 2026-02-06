@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Cliente\ClienteController;
 use App\Http\Controllers\Pet\PetController;
+use App\Http\Controllers\Servico\EstoqueController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:administrador')->group(function ($router) {
@@ -16,4 +17,10 @@ Route::middleware('auth:administrador')->group(function ($router) {
     $router->get('pet/{id}', [PetController::class, 'show']);
     $router->put('pet/{id}', [PetController::class, 'update']);
     $router->delete('pet/{id}', [PetController::class, 'destroy']);
+
+    $router->get('estoque', [EstoqueController::class, 'index']);
+    $router->post('estoque', [EstoqueController::class, 'store']);
+    $router->get('estoque/{id}', [EstoqueController::class, 'show']);
+    $router->put('estoque/{id}', [EstoqueController::class, 'update']);
+    $router->delete('estoque/{id}', [EstoqueController::class, 'destroy']);
 });

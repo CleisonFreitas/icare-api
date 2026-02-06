@@ -3,14 +3,13 @@
 namespace Tests;
 
 use App\Models\Usuario\Usuario;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
 
 abstract class TestCase extends BaseTestCase
 {
-    use WithFaker, DatabaseMigrations;
+    use WithFaker;
 
     public function actingAsAdmin(): Usuario
     {

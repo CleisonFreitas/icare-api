@@ -21,7 +21,6 @@ class VacinaFactory extends Factory
             'nome' => $this->faker->name,
             'data_administrada' => Carbon::parse($this->faker->date),
             'aplicado_por' => Usuario::factory()->lazy(),
-            'lote' => $this->faker->word,
             'fabricante' => $this->faker->name,
             'dosagem' => $this->faker->randomDigit,
             'servico_id' => Servico::factory()->lazy()

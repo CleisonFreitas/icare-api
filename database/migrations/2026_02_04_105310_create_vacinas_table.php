@@ -13,7 +13,6 @@ return new class extends Migration
             $table->string('nome');
             $table->dateTime('data_administrada')->nullable();
             $table->foreignId('aplicado_por')->constrained('usuarios');
-            $table->string('lote')->nullable();
             $table->string('fabricante')->nullable();
             $table->tinyInteger('dosagem');
             $table->foreignId('pet_id')->constrained('pets');

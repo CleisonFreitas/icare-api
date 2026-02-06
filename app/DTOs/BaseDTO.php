@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use JsonSerializable;
 use ReflectionClass;
 
-abstract class BaseDTO implements JsonSerializable
+abstract readonly class BaseDTO implements JsonSerializable
 {
     public function toArray(): array
     {

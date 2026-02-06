@@ -8,7 +8,7 @@ use App\DTOs\BaseDTO;
 use App\Enums\Pet\PetTamanhoEnum;
 use App\Http\Requests\Pet\PetUpdateRequest;
 
-class PetUpdateDTO extends BaseDTO
+readonly class PetUpdateDTO extends BaseDTO
 {
     public function __construct(
         private readonly string $nome,

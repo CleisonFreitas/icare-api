@@ -21,7 +21,7 @@ class ServicoFactory extends Factory
             'detalhes' => $this->faker->sentence,
             'status' => $this->faker->randomElement(StatusServicoEnum::cases()),
             'data_conclusao' => Carbon::parse($this->faker->dateTime),
-            'valor' => $this->faker->randomFloat,
+            'valor' => $this->faker->randomDigitNotNull,
             'pet_id' => Pet::factory()->lazy(),
             'consulta_id' => Consulta::factory()->lazy()
         ];
