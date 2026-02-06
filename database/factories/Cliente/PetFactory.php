@@ -22,6 +22,7 @@ class PetFactory extends Factory
             'cor' => $this->faker->colorName,
             'especie_id' => Especie::factory()->lazy(),
             'cliente_id' => Cliente::factory()->lazy(),
+            'data_nascimento' => $this->faker->date,
             'ativo' => true,
             'tem_microship' => $this->faker->boolean,
             'numero_microship' => $this->faker->numerify('#########')

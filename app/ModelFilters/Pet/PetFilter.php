@@ -24,6 +24,14 @@ class PetFilter extends ModelFilter
         return $this->where('tamanho', $tamanhoEnum);
     }
 
+    public function dataNascimento(array $datas): self
+    {
+        $inicio = data_get($datas, 'inicio');
+        $fim = data_get($datas, 'fim');
+
+        return $this->whereBetween('data_nascimento', [$inicio, $fim]);
+    }
+
     public function temMicroship(bool $value): self
     {
         return $this->where('tem_microship', $value);

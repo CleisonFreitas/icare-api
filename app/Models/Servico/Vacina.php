@@ -2,7 +2,10 @@
 
 namespace App\Models\Servico;
 
+use App\ModelFilters\Servico\VacinaFilter;
 use App\Models\Usuario\Usuario;
+use App\Traits\Orderable;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Vacina extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Filterable, Orderable;
 
     protected $table = 'vacinas';
 
@@ -24,6 +27,11 @@ class Vacina extends Model
         'dosagem',
         'servico_id',
     ];
+
+    public function modelFilter(): string
+    {
+        return $this->provideFilter(filter: VacinaFilter::class);
+    }
 
     public function autor(): BelongsTo
     {

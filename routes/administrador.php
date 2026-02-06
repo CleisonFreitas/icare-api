@@ -3,6 +3,7 @@
 use App\Http\Controllers\Cliente\ClienteController;
 use App\Http\Controllers\Pet\PetController;
 use App\Http\Controllers\Servico\EstoqueController;
+use App\Http\Controllers\Servico\VacinaController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:administrador')->group(function ($router) {
@@ -23,4 +24,10 @@ Route::middleware('auth:administrador')->group(function ($router) {
     $router->get('estoque/{id}', [EstoqueController::class, 'show']);
     $router->put('estoque/{id}', [EstoqueController::class, 'update']);
     $router->delete('estoque/{id}', [EstoqueController::class, 'destroy']);
+
+    $router->get('vacina', [VacinaController::class, 'index']);
+    $router->post('vacina', [VacinaController::class, 'store']);
+    $router->get('vacina/{id}', [VacinaController::class, 'show']);
+    $router->put('vacina/{id}', [VacinaController::class, 'update']);
+    $router->delete('vacina/{id}', [VacinaController::class, 'destroy']);
 });

@@ -26,6 +26,7 @@ class Pet extends Model
         'tamanho',
         'cor',
         'ativo',
+        'data_nascimento',
         'tem_microship',
         'numero_microship',
         'cliente_id',

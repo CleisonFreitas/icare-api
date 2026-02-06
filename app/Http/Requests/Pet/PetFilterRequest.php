@@ -13,6 +13,7 @@ class PetFilterRequest extends BaseRequest
         return [
             'nome' => ['nullable', 'string'],
             'documento' => ['nullable', 'string'],
+            'data_nascimento' => ['sometimes', 'array:inicio,fim'],
             'tamanho' => ['nullable', Rule::in(PetTamanhoEnum::toValues())],
             'cor' => ['nullable', 'string'],
             'numero_microship' => ['nullable', 'string'],
