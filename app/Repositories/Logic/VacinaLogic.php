@@ -35,6 +35,19 @@ class VacinaLogic implements VacinaContract
     /**
      * @inheritDoc
      */
+    public function criarEmLote(array $dados): void
+    {
+        foreach ($dados as &$vacina) {
+            $vacina['created_at'] = $vacina['created_at'] ?? now();
+            $vacina['updated_at'] = $vacina['updated_at'] ?? now();
+        }
+
+        Vacina::insert($dados);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function atualizar(VacinaDTO $dto, Vacina $vacina): Vacina
     {
         $vacina->fill($dto->toArray());

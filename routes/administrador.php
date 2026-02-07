@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Cliente\ClienteController;
 use App\Http\Controllers\Pet\PetController;
+use App\Http\Controllers\Servico\ConsultaController;
 use App\Http\Controllers\Servico\EstoqueController;
 use App\Http\Controllers\Servico\ServicoController;
 use App\Http\Controllers\Servico\VacinaController;
@@ -37,4 +38,10 @@ Route::middleware('auth:administrador')->group(function ($router) {
     $router->get('servico/{id}', [ServicoController::class, 'show']);
     $router->put('servico/{id}', [ServicoController::class, 'update']);
     $router->delete('servico/{id}', [ServicoController::class, 'destroy']);
+
+    $router->get('consulta', [ConsultaController::class, 'index']);
+    $router->post('consulta', [ConsultaController::class, 'store']);
+    $router->get('consulta/{id}', [ConsultaController::class, 'show']);
+    $router->put('consulta/{id}', [ConsultaController::class, 'update']);
+    $router->delete('consulta/{id}', [ConsultaController::class, 'destroy']);
 });

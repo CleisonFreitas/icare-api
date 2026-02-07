@@ -41,7 +41,9 @@ class Consulta extends Model
     }
 
     protected $casts = [
-        'status' => StatusConsultaEnum::class
+        'status' => StatusConsultaEnum::class,
+        'data_prevista' => 'datetime',
+        'data_realizada' => 'datetime'
     ];
 
     public function pet(): BelongsTo

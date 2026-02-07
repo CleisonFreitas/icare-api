@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Repositories\Contracts\ClienteContract;
+use App\Repositories\Contracts\ConsultaContract;
 use App\Repositories\Contracts\ContatoContract;
 use App\Repositories\Contracts\EnderecoContract;
 use App\Repositories\Contracts\EstoqueContract;
@@ -10,6 +11,7 @@ use App\Repositories\Contracts\PetContract;
 use App\Repositories\Contracts\ServicoContract;
 use App\Repositories\Contracts\VacinaContract;
 use App\Repositories\Logic\ClienteLogic;
+use App\Repositories\Logic\ConsultaLogic;
 use App\Repositories\Logic\ContatoLogic;
 use App\Repositories\Logic\EnderecoLogic;
 use App\Repositories\Logic\EstoqueLogic;
@@ -29,6 +31,7 @@ class RepositoryProvider extends ServiceProvider
         $this->app->bind(EstoqueContract::class, EstoqueLogic::class);
         $this->app->bind(ServicoContract::class, ServicoLogic::class);
         $this->app->bind(VacinaContract::class, VacinaLogic::class);
+        $this->app->bind(ConsultaContract::class, ConsultaLogic::class);
     }
 
     public function boot(): void {}

@@ -29,6 +29,14 @@ interface VacinaContract
     public function cadastrar(VacinaDTO $dto): Vacina;
 
     /**
+     * Cria vacinas em lote. Recebe arrays compatíveis com inserção em massa.
+     *
+     * @param array $vacinasData
+     * @return void
+     */
+    public function criarEmLote(array $vacinasData): void;
+
+    /**
      * Atualizar uma vacina existente
      *
      * @param VacinaDTO $dto
