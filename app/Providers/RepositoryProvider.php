@@ -7,12 +7,14 @@ use App\Repositories\Contracts\ContatoContract;
 use App\Repositories\Contracts\EnderecoContract;
 use App\Repositories\Contracts\EstoqueContract;
 use App\Repositories\Contracts\PetContract;
+use App\Repositories\Contracts\ServicoContract;
 use App\Repositories\Contracts\VacinaContract;
 use App\Repositories\Logic\ClienteLogic;
 use App\Repositories\Logic\ContatoLogic;
 use App\Repositories\Logic\EnderecoLogic;
 use App\Repositories\Logic\EstoqueLogic;
 use App\Repositories\Logic\PetLogic;
+use App\Repositories\Logic\ServicoLogic;
 use App\Repositories\Logic\VacinaLogic;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +27,7 @@ class RepositoryProvider extends ServiceProvider
         $this->app->bind(ContatoContract::class, ContatoLogic::class);
         $this->app->bind(PetContract::class, PetLogic::class);
         $this->app->bind(EstoqueContract::class, EstoqueLogic::class);
+        $this->app->bind(ServicoContract::class, ServicoLogic::class);
         $this->app->bind(VacinaContract::class, VacinaLogic::class);
     }
 

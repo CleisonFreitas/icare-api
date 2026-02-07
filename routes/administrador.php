@@ -3,6 +3,7 @@
 use App\Http\Controllers\Cliente\ClienteController;
 use App\Http\Controllers\Pet\PetController;
 use App\Http\Controllers\Servico\EstoqueController;
+use App\Http\Controllers\Servico\ServicoController;
 use App\Http\Controllers\Servico\VacinaController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,4 +31,10 @@ Route::middleware('auth:administrador')->group(function ($router) {
     $router->get('vacina/{id}', [VacinaController::class, 'show']);
     $router->put('vacina/{id}', [VacinaController::class, 'update']);
     $router->delete('vacina/{id}', [VacinaController::class, 'destroy']);
+
+    $router->get('servico', [ServicoController::class, 'index']);
+    $router->post('servico', [ServicoController::class, 'store']);
+    $router->get('servico/{id}', [ServicoController::class, 'show']);
+    $router->put('servico/{id}', [ServicoController::class, 'update']);
+    $router->delete('servico/{id}', [ServicoController::class, 'destroy']);
 });
