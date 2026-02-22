@@ -2,33 +2,29 @@
 
 namespace App\Services\Administrador;
 
+use App\DTOs\Usuario\UsuarioAuthDTO;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Auth\AuthenticationException;
 
 class MeService
 {
-    public function execute(Request $request): array
+    public function execute(Request $request): UsuarioAuthDTO
     {
         $user = $request->user();
-        if (! $user) {
-            throw new \RuntimeException('Não autenticado.', 401);
+        if (!$user) {
+            throw new AuthenticationException('Não autenticado.', ['administrador']);
         }
 
         $token = $user->currentAccessToken();
-        if (! $token) {
-            throw new \RuntimeException('Token não encontrado.', 401);
+        if (!$token) {
+            throw new AuthenticationException('Token não encontrado!.', ['administrador']);
         }
 
         if ($token->expires_at && Carbon::parse($token->expires_at)->lessThanOrEqualTo(now())) {
-            throw new \RuntimeException('Token já expirado', 401);
+            throw new AuthenticationException('Token já expirado', ['administrador']);
         }
 
-        return [
-            'usuario' => [
-                'id' => $user->id,
-                'email' => $user->email,
-                'nome' => $user->nome,
-            ],
-        ];
+        return new UsuarioAuthDTO($user, $token->name);
     }
 }

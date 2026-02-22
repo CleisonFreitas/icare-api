@@ -10,7 +10,7 @@ class ValidarPinRequest extends BaseRequest
     {
         return [
             'email' => 'required|email',
-            'pin' => 'required|digits:6',
+            'pin' => 'required|digits:4',
         ];
     }
 }

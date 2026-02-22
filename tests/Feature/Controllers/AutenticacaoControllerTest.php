@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Controllers;
 
 use App\Mail\PinRecuperacaoMail;
 use App\Models\Usuario\Usuario;
@@ -11,7 +11,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
-class AdministracaoAuthTest extends TestCase
+class AutenticacaoControllerTest extends TestCase
 {
     #[Test]
     public function fluxo_login_me_e_logout()
@@ -34,9 +34,9 @@ class AdministracaoAuthTest extends TestCase
             ->getJson('api/v1/administrador/me');
         $me->assertStatus(Response::HTTP_OK)
             ->assertJsonPath('usuario.email', $email);
+
         $logout = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->postJson('api/v1/administrador/logout');
-
         $logout->assertStatus(Response::HTTP_OK);
         
         $me2 = $this->withHeader('Authorization', 'Bearer ' . $token)

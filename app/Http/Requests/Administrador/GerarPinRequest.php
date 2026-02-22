@@ -9,7 +9,7 @@ class GerarPinRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email',
+            'email' => 'required|email|exists:usuarios,email',
         ];
     }
 }

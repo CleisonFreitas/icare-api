@@ -19,11 +19,12 @@ class LoginService
         $token = $user->createToken('admin-token', ['*'])->plainTextToken;
 
         return [
-            'token' => $token,
             'usuario' => [
                 'id' => $user->id,
+                'nome' => $user->nome,
                 'email' => $user->email,
             ],
+            'token' => $token,
         ];
     }
 }
