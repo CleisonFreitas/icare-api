@@ -5,9 +5,9 @@ namespace App\Exceptions;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 
-class UsuarioLoginException extends RuntimeException
+final class UsuarioLoginException extends RuntimeException
 {
-    public function __construct(private readonly string $message = "")
+    public function __construct(string $message = "")
     {
         return parent::__construct($message, Response::HTTP_FORBIDDEN);
     }
