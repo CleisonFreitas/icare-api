@@ -4,6 +4,7 @@ namespace App\Services\Administrador;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class ValidarPinService
 {
@@ -12,12 +13,12 @@ class ValidarPinService
         $record = DB::table('password_reset_tokens')->where('email', $email)->first();
 
         if (! $record || (string) $record->token !== (string) $pin) {
-            throw new \RuntimeException('PIN inválido.', 400);
+            throw new \RuntimeException('PIN inválido.', Response::HTTP_BAD_REQUEST);
         }
 
         $created = Carbon::parse($record->created_at);
         if ($created->diffInMinutes(Carbon::now()) > 60) {
-            throw new \RuntimeException('PIN expirado.', 400);
+            throw new \RuntimeException('PIN expirado.', Response::HTTP_BAD_REQUEST);
         }
     }
 }

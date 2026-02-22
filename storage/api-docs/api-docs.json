@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Task Manager API",
-        "description": "API para gerenciamento de tarefas",
+        "title": "Icare Pet API",
+        "description": "API para gerenciamento de clínicas de pet shop",
         "version": "1.0.0"
     },
     "servers": [
@@ -12,25 +12,448 @@
         }
     ],
     "paths": {
-        "/health": {
-            "get": {
+        "/api/v1/administrador/login": {
+            "post": {
                 "tags": [
-                    "System"
+                    "Autenticação"
                 ],
-                "summary": "Health check",
-                "operationId": "e63a0ba6f3d7377918c8f5e6e1d06493",
+                "summary": "Login do administrador",
+                "operationId": "b365e50b1043617749b87f6d270f68d5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "API funcionando"
+                        "description": "Login realizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Credenciais inválidas"
+                    },
+                    "422": {
+                        "description": "Erro de validação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/administrador/logout": {
+            "post": {
+                "tags": [
+                    "Autenticação"
+                ],
+                "summary": "Logout do administrador",
+                "description": "Remove o token atual do usuário autenticado",
+                "operationId": "56dd5c72381df1ab0c5e70ff96369373",
+                "responses": {
+                    "200": {
+                        "description": "Logout realizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LogoutResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Usuário não autenticado ou token inválido"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/administrador/me": {
+            "get": {
+                "tags": [
+                    "Autenticação"
+                ],
+                "summary": "Retorna os dados do administrador autenticado",
+                "description": "Valida o token atual e retorna os dados do usuário autenticado",
+                "operationId": "0b270e6107ca6a2f728d2a23a7d545ee",
+                "responses": {
+                    "200": {
+                        "description": "Usuário autenticado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autenticado, token inválido ou expirado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/administrador/gerar-pin": {
+            "post": {
+                "tags": [
+                    "Autenticação"
+                ],
+                "summary": "Gera PIN para recuperação de senha",
+                "description": "Gera um código PIN de 4 dígitos e envia por email para o usuário",
+                "operationId": "237c15f38e2150b25462d9463b19b1f5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GerarPinRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "PIN gerado e enviado com sucesso"
+                    },
+                    "400": {
+                        "description": "Email não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BadRequestError"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erro de validação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/administrador/validar-pin": {
+            "post": {
+                "tags": [
+                    "Autenticação"
+                ],
+                "summary": "Valida PIN de recuperação de senha",
+                "description": "Valida se o PIN informado é válido e não expirou",
+                "operationId": "5bbdc30d84f16e78eedde65e2ed0c755",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ValidarPinRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "PIN válido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PinValidadoResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "PIN inválido ou expirado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BadRequestError"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erro de validação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/administrador/alterar-senha": {
+            "post": {
+                "tags": [
+                    "Autenticação"
+                ],
+                "summary": "Altera a senha do usuário usando PIN",
+                "description": "Valida o PIN e altera a senha do usuário",
+                "operationId": "542991d91767ed78e3edeb99a71d96b5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AlterarSenhaRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Senha alterada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SenhaAlteradaSchema"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "PIN inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BadRequestError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado"
+                    },
+                    "422": {
+                        "description": "Erro de validação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
     },
+    "components": {
+        "schemas": {
+            "AlterarSenhaRequest": {
+                "required": [
+                    "email",
+                    "pin",
+                    "senha",
+                    "senha_confirmation"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "admin@email.com"
+                    },
+                    "pin": {
+                        "description": "PIN enviado por email",
+                        "type": "string",
+                        "example": "123456"
+                    },
+                    "senha": {
+                        "type": "string",
+                        "format": "password",
+                        "minLength": 6,
+                        "example": "novasenha123"
+                    },
+                    "senha_confirmation": {
+                        "type": "string",
+                        "format": "password",
+                        "example": "novasenha123"
+                    }
+                },
+                "type": "object"
+            },
+            "GerarPinRequest": {
+                "required": [
+                    "email"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "admin@email.com"
+                    }
+                },
+                "type": "object"
+            },
+            "LoginRequest": {
+                "required": [
+                    "email",
+                    "senha"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "admin@email.com"
+                    },
+                    "senha": {
+                        "type": "string",
+                        "format": "password",
+                        "example": "123456"
+                    }
+                },
+                "type": "object"
+            },
+            "ValidarPinRequest": {
+                "required": [
+                    "email",
+                    "pin"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "admin@email.com"
+                    },
+                    "pin": {
+                        "description": "PIN de 4 dígitos enviado por email",
+                        "type": "string",
+                        "example": "1234"
+                    }
+                },
+                "type": "object"
+            },
+            "BadRequestError": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Email informado não foi encontrado!"
+                    }
+                },
+                "type": "object"
+            },
+            "LoginResponse": {
+                "properties": {
+                    "usuario": {
+                        "$ref": "#/components/schemas/Usuario"
+                    },
+                    "token": {
+                        "type": "string",
+                        "example": "1|asdhjkasdhjkashdkjashdkjashdk"
+                    }
+                },
+                "type": "object"
+            },
+            "LogoutResponse": {
+                "properties": {
+                    "usuario": {
+                        "$ref": "#/components/schemas/Usuario"
+                    },
+                    "token": {
+                        "type": "string",
+                        "example": "admin-token",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "PinValidadoResponse": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "PIN válido."
+                    }
+                },
+                "type": "object"
+            },
+            "SenhaAlteradaSchema": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Senha alterada com sucesso."
+                    }
+                },
+                "type": "object"
+            },
+            "ValidationError": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "O campo email é obrigatório."
+                    },
+                    "errors": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Usuario": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nome": {
+                        "type": "string",
+                        "example": "Administrador"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "admin@email.com"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
     "tags": [
         {
-            "name": "System",
-            "description": "System"
+            "name": "Autenticação",
+            "description": "Autenticação"
         }
     ]
 }

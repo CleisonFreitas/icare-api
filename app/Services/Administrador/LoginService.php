@@ -2,6 +2,7 @@
 
 namespace App\Services\Administrador;
 
+use App\Exceptions\UsuarioLoginException;
 use App\Models\Usuario\Usuario;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,7 +14,7 @@ class LoginService
         $user = Usuario::where('email', $data['email'])->first();
 
         if (! $user || ! Hash::check($data['senha'], $user->senha)) {
-            throw new \RuntimeException('Credenciais inválidas.', 401);
+            throw new UsuarioLoginException('Credenciais inválidas.');
         }
 
         $token = $user->createToken('admin-token', ['*'])->plainTextToken;
