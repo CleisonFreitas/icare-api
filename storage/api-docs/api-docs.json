@@ -267,6 +267,252 @@
                     }
                 }
             }
+        },
+        "/api/v1/administrador/cliente": {
+            "get": {
+                "tags": [
+                    "Cliente"
+                ],
+                "summary": "Lista clientes com filtros e paginação",
+                "operationId": "eed1c7879af6b5069b8cd1a2d00da070",
+                "parameters": [
+                    {
+                        "name": "nome",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "documento",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "data_nascimento[inicio]",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "data_nascimento[fim]",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "limite",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "example": 15
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista paginada de clientes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaginatedClienteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Cliente"
+                ],
+                "summary": "Cadastrar novo cliente",
+                "operationId": "7f8c1bcf1633dc05639af91aa807ce33",
+                "requestBody": {
+                    "description": "Dados para criação do cliente",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ClienteStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Cliente criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cliente"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    },
+                    "401": {
+                        "description": "Não autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/administrador/cliente/{id}": {
+            "get": {
+                "tags": [
+                    "Cliente"
+                ],
+                "summary": "Busca cliente por ID",
+                "operationId": "347bc5c2aa305f8f881c1e58fd5834f9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cliente encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cliente"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Cliente não encontrado"
+                    },
+                    "401": {
+                        "description": "Não autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Cliente"
+                ],
+                "summary": "Atualizar cliente",
+                "operationId": "a6a3b459448f68d8010246d4c61a4a56",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ClienteUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Cliente atualizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cliente"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Cliente não encontrado"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    },
+                    "401": {
+                        "description": "Não autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Cliente"
+                ],
+                "summary": "Remover cliente",
+                "operationId": "fc8c281734bbefb49e67c21f945f1716",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Cliente removido com sucesso"
+                    },
+                    "404": {
+                        "description": "Cliente não encontrado"
+                    },
+                    "401": {
+                        "description": "Não autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -299,6 +545,71 @@
                         "type": "string",
                         "format": "password",
                         "example": "novasenha123"
+                    }
+                },
+                "type": "object"
+            },
+            "ClienteStoreRequest": {
+                "required": [
+                    "nome",
+                    "email",
+                    "documento",
+                    "endereco"
+                ],
+                "properties": {
+                    "nome": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "João Silva"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "joao@email.com"
+                    },
+                    "documento": {
+                        "type": "string",
+                        "maxLength": 11,
+                        "example": "12345678900"
+                    },
+                    "data_nascimento": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "1990-01-01",
+                        "nullable": true
+                    },
+                    "endereco": {
+                        "$ref": "#/components/schemas/Endereco"
+                    },
+                    "contatos": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Contato"
+                        },
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ClienteUpdateRequest": {
+                "required": [
+                    "nome",
+                    "email",
+                    "documento"
+                ],
+                "properties": {
+                    "nome": {
+                        "type": "string",
+                        "example": "João Atualizado"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "joao@email.com"
+                    },
+                    "documento": {
+                        "type": "string",
+                        "example": "12345678900"
                     }
                 },
                 "type": "object"
@@ -363,6 +674,60 @@
                 },
                 "type": "object"
             },
+            "BasePaginatedResponse": {
+                "properties": {
+                    "links": {
+                        "properties": {
+                            "first": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "last": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "prev": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "next": {
+                                "type": "string",
+                                "nullable": true
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "meta": {
+                        "properties": {
+                            "current_page": {
+                                "type": "integer"
+                            },
+                            "from": {
+                                "type": "integer",
+                                "nullable": true
+                            },
+                            "last_page": {
+                                "type": "integer"
+                            },
+                            "path": {
+                                "type": "string"
+                            },
+                            "per_page": {
+                                "type": "integer"
+                            },
+                            "to": {
+                                "type": "integer",
+                                "nullable": true
+                            },
+                            "total": {
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
             "LoginResponse": {
                 "properties": {
                     "usuario": {
@@ -387,6 +752,24 @@
                     }
                 },
                 "type": "object"
+            },
+            "PaginatedClienteResponse": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BasePaginatedResponse"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/Cliente"
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
             },
             "PinValidadoResponse": {
                 "properties": {
@@ -424,6 +807,125 @@
                 },
                 "type": "object"
             },
+            "Cliente": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "nome": {
+                        "type": "string",
+                        "example": "João Silva"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "joao@email.com"
+                    },
+                    "documento": {
+                        "type": "string",
+                        "example": "12345678900"
+                    },
+                    "data_nascimento": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "1990-01-01",
+                        "nullable": true
+                    },
+                    "endereco": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Endereco"
+                            }
+                        ],
+                        "nullable": true
+                    },
+                    "contatos": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ContatoResponse"
+                        },
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ContatoResponse": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "tipo": {
+                        "type": "string",
+                        "example": "telefone"
+                    },
+                    "valor": {
+                        "type": "string",
+                        "example": "(11)99999-9999"
+                    }
+                },
+                "type": "object"
+            },
+            "Contato": {
+                "required": [
+                    "tipo",
+                    "valor"
+                ],
+                "properties": {
+                    "tipo": {
+                        "type": "string",
+                        "example": "telefone"
+                    },
+                    "valor": {
+                        "type": "string",
+                        "example": "(11)99999-9999"
+                    }
+                },
+                "type": "object"
+            },
+            "Endereco": {
+                "required": [
+                    "cep",
+                    "logradouro",
+                    "numero",
+                    "bairro",
+                    "cidade",
+                    "pais"
+                ],
+                "properties": {
+                    "cep": {
+                        "type": "string",
+                        "example": "01001000"
+                    },
+                    "logradouro": {
+                        "type": "string",
+                        "example": "Rua das Flores"
+                    },
+                    "numero": {
+                        "type": "integer",
+                        "example": 123
+                    },
+                    "complemento": {
+                        "type": "string",
+                        "example": "Apto 12",
+                        "nullable": true
+                    },
+                    "bairro": {
+                        "type": "string",
+                        "example": "Centro"
+                    },
+                    "cidade": {
+                        "type": "string",
+                        "example": "São Paulo"
+                    },
+                    "pais": {
+                        "type": "string",
+                        "example": "Brasil"
+                    }
+                },
+                "type": "object"
+            },
             "Usuario": {
                 "properties": {
                     "id": {
@@ -454,6 +956,10 @@
         {
             "name": "Autenticação",
             "description": "Autenticação"
+        },
+        {
+            "name": "Cliente",
+            "description": "Cliente"
         }
     ]
 }
