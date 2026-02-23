@@ -52,7 +52,7 @@ readonly final class ClienteController
                 response: 200,
                 description: "Lista paginada de clientes",
                 content: new OA\JsonContent(
-                    ref: "#/components/schemas/PaginatedClienteResponse"
+                    ref: "#/components/schemas/BasePaginatedResponse"
                 )
             ),
             new OA\Response(response: 401, description: "Não autenticado")
