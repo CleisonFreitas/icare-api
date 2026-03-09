@@ -17,10 +17,17 @@ class ClienteFilterDTO
     public static function fromApiRequest(ClienteSearchRequest $request): self
     {
         $dados = $request->validated();
+        $ordenacao = [];
+        if (array_key_exists('ordenar_por', $dados)) {
+            $ordenacao = [
+                'key' => $dados['ordenar_por'],
+                'direction' => $dados['direcao']
+            ];
+        }
         return new self(
             filtros: collect($dados)->except(['ordenacoes', 'limite'])->toArray(),
-            ordenacoes: $dados['ordenacoes'] ?? [],
-            limite: data_get($dados, 'per_page', 15)
+            ordenacoes: $ordenacao,
+            limite: (int) data_get($dados, 'limite', 15)
         );
     }
 

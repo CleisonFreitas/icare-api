@@ -13,9 +13,8 @@ class ClienteSearchRequest extends BaseRequest
             'documento' => ['nullable', 'string'],
             'email' => ['nullable', 'string'],
             'data_nascimento' => ['nullable', 'array:inicio,fim'],
-            'ordenacoes' => ['array', 'nullable'],
-            'ordenacoes.*.coluna' => ['required_with:ordenacoes', 'string', 'in:nome,id,documento'],
-            'ordenacoes.*.ordem' => ['required_with:ordenacoes.*.coluna', 'string', 'in:asc,desc'],
+            'ordenar_por' => ['sometimes', 'string', 'in:nome,id,documento'],
+            'direcao' => ['required_with:ordernar_por', 'string', 'in:asc,desc'],
             'limite' => ['nullable']
         ];
     }

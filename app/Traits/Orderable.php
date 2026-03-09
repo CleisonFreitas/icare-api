@@ -14,17 +14,8 @@ trait Orderable
             return $query;
         }
 
-        foreach ($ordenacoes as $ordem) {
-            $coluna = data_get($ordem, 'coluna');
-            $valor = data_get($ordem, 'ordem');
-
-            if ($coluna == null || $valor == null) {
-                continue;
-            }
-
-            $query->orderBy($coluna, $valor);
-        }
-
-        return $query;
+        $coluna = $ordenacoes['key'];
+        $valor = $ordenacoes['direction'];
+        return $query->orderBy($coluna, $valor);
     }
 }
