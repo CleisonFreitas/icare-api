@@ -13,6 +13,7 @@ class ClienteStoreRequest extends BaseRequest
         return [
             'nome' => ['required', 'string', 'max:255'],
             'email' => ['required', 'unique:clientes,email', 'email'],
+            'senha' => ['required', 'string', 'min:6'],
             'documento' => ['required', 'max:11', 'string'],
             'data_nascimento' => ['nullable', 'date'],
             'endereco' => ['required', 'array'],
@@ -22,10 +23,12 @@ class ClienteStoreRequest extends BaseRequest
             'endereco.complemento' => ['nullable', 'string'],
             'endereco.bairro' => ['required', 'string'],
             'endereco.cidade' => ['required', 'string'],
-            'endereco.pais' => ['required', 'string'],
+            'endereco.uf' => ['required', 'string'],
             'contatos' => ['nullable', 'array'],
             'contatos.*.tipo' => ['required_with:contatos', Rule::in(ClienteTipoContatoEnum::toValues())],
-            'contatos.*.valor' => ['required_with:contatos', 'string']
+            'contatos.*.nome' => ['required_with:contatos', 'string'],
+            'contatos.*.valor' => ['required_with:contatos', 'string'],
+            'contatos.*.preferencial' => ['sometimes', 'boolean'],
         ];
     }
 
@@ -38,9 +41,10 @@ class ClienteStoreRequest extends BaseRequest
             'endereco.complemento' => 'complemento',
             'endereco.bairro' => 'bairro',
             'endereco.cidade' => 'cidade',
-            'endereco.pais' => 'pais',
             'contatos.*.tipo' => 'tipo de contato',
             'contatos.*.valor' => 'descrição do contato',
+            'contatos.*.nome' => 'nome do contato',
+            'contatos.*.preferencial' => 'contato preferencial',
         ];
     }
 }

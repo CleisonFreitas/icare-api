@@ -15,15 +15,30 @@ class EnderecoLogic implements EnderecoContract
     public function create(EnderecoDTO $dto, Cliente $cliente): Endereco
     {
         $endereco = new Endereco();
+        $endereco = $this->montarEndereco($endereco, $dto, $cliente);
+        $endereco->cliente_id = $cliente->id;
+        $endereco->save();
+
+        return $endereco;
+    }
+
+    public function update(EnderecoDTO $dto, Cliente $cliente): Endereco
+    {
+        $endereco = $this->montarEndereco($cliente->endereco, $dto, $cliente);
+        $endereco->save();
+
+        return $endereco;
+    }
+
+    private function montarEndereco(Endereco $endereco, EnderecoDTO $dto, Cliente $cliente): Endereco
+    {
         $endereco->cep = $dto->getCep();
         $endereco->logradouro = $dto->getLogradouro();
         $endereco->numero = $dto->getNumero();
         $endereco->bairro = $dto->getBairro();
         $endereco->cidade = $dto->getCidade();
-        $endereco->pais = $dto->getPais();
+        $endereco->uf = $dto->getUf();
         $endereco->complemento = $dto->getComplemento();
-        $endereco->cliente_id = $cliente->id;
-        $endereco->save();
 
         return $endereco;
     }

@@ -19,4 +19,14 @@ interface EnderecoContract
      * @return Endereco
      */
     public function create(EnderecoDTO $dto, Cliente $cliente): Endereco;
+
+    /**
+     * Responsável pela atualização de endereço.
+     *
+     * @param EnderecoDTO $dto
+     * @param Cliente $cliente
+     * 
+     * @return Endereco
+     */
+    public function update(EnderecoDTO $dto, Cliente $cliente): Endereco;
 }

@@ -13,4 +13,20 @@ class ContatoLogic implements ContatoContract
     {
         $cliente->contatos()->createMany($dados);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function updateMany(array $dados, Cliente $cliente): array
+    {
+        $cliente->contatos()->upsert(
+            $dados,
+            ['id'],
+            ['nome', 'tipo', 'valor']
+        );
+
+        $cliente->load('contatos');
+
+        return $cliente->contatos->toArray();
+    }
 }

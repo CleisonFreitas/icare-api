@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('complemento')->nullable();
             $table->string('bairro');
             $table->string('cidade');
-            $table->string('pais');
+            $table->string('uf');
             $table->foreignId('cliente_id')->constrained('clientes');
             $table->timestamps();
             $table->softDeletes();

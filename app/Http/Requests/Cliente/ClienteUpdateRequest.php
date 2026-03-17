@@ -12,7 +12,8 @@ class ClienteUpdateRequest extends BaseRequest
         return [
             'nome' => ['required', 'string'],
             'email' => ['required', 'email', Rule::unique('clientes')->ignore($this->id)],
-            'documento' => ['required', 'string']
+            'documento' => ['required', 'string', 'size:11'],
+            'data_nascimento' => ['required', 'date']
         ];
     }
 }

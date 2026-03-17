@@ -20,7 +20,7 @@ class EnderecoFactory extends Factory
             'numero' => $this->faker->randomNumber,
             'bairro' => $this->faker->streetName,
             'cidade' => $this->faker->city,
-            'pais' => $this->faker->country,
+            'uf' => $this->faker->stateAbbr,
             'cliente_id' => Cliente::factory()->lazy(),
         ];
     }

@@ -9,6 +9,7 @@ use App\Http\Resources\Cliente\ClienteResource;
 use App\Repositories\Contracts\ClienteContract;
 use App\Repositories\Contracts\ContatoContract;
 use App\Repositories\Contracts\EnderecoContract;
+use Illuminate\Support\Facades\DB;
 
 class CadastrarCliente
 {
@@ -20,11 +21,13 @@ class CadastrarCliente
 
     public function cadastrar(ClienteDTO $dto): ClienteResource
     {
+        DB::beginTransaction();
         $cliente = $this->logic->create($dto);
         $enderecoDTO = $dto->getEnderecoDto();
         $contatos = $dto->getContatos();
         $this->contatosLogic->createMany($contatos, $cliente);
         $this->enderecoLogic->create($enderecoDTO, $cliente);
+        DB::commit();
         return new ClienteResource($cliente
             ->refresh()
             ->load(['endereco', 'contatos']

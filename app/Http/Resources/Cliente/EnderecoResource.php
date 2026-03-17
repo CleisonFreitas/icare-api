@@ -11,12 +11,13 @@ class EnderecoResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'cep' => $this->cep,
             'logradouro' => $this->logradouro,
             'numero' => $this->numero,
             'complemento' => $this->complemento,
             'bairro' => $this->bairro,
             'cidade' => $this->cidade,
-            'pais' => $this->pais
+            'uf' => $this->uf,
         ];
     }
 }

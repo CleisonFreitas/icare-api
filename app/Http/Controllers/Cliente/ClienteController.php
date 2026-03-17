@@ -10,9 +10,13 @@ use App\DTOs\Cliente\ClienteUpdateDTO;
 use App\Http\Requests\Cliente\ClienteSearchRequest;
 use App\Http\Requests\Cliente\ClienteStoreRequest;
 use App\Http\Requests\Cliente\ClienteUpdateRequest;
+use App\Http\Requests\Cliente\ContatoRequest;
+use App\Http\Requests\Cliente\EnderecoRequest;
 use App\Http\Resources\Cliente\ClienteResource;
 use App\Models\Cliente\Cliente;
 use App\Services\Cliente\AtualizarCliente;
+use App\Services\Cliente\AtualizarContatosDoCliente;
+use App\Services\Cliente\AtualizarEnderecoDoCliente;
 use App\Services\Cliente\BuscarClientes;
 use App\Services\Cliente\CadastrarCliente;
 use App\Services\Cliente\RemoverCliente;
@@ -23,7 +27,7 @@ use OpenApi\Attributes as OA;
 readonly final class ClienteController
 {
     #[OA\Get(
-        path: "/api/v1/administrador/cliente",
+        path: "/api/v1/cliente",
         summary: "Lista clientes com filtros e paginação",
         tags: ["Cliente"],
         security: [["bearerAuth" => []]],
@@ -65,7 +69,7 @@ readonly final class ClienteController
     }
 
     #[OA\Post(
-        path: "/api/v1/administrador/cliente",
+        path: "/api/v1/cliente",
         summary: "Cadastrar novo cliente",
         tags: ["Cliente"],
         security: [["bearerAuth" => []]],
@@ -103,7 +107,7 @@ readonly final class ClienteController
     }
 
     #[OA\Get(
-        path: "/api/v1/administrador/cliente/{id}",
+        path: "/api/v1/cliente/{id}",
         summary: "Busca cliente por ID",
         tags: ["Cliente"],
         security: [["bearerAuth" => []]],
@@ -132,7 +136,7 @@ readonly final class ClienteController
     }
 
     #[OA\Put(
-        path: "/api/v1/administrador/cliente/{id}",
+        path: "/api/v1/cliente/{id}",
         summary: "Atualizar cliente",
         tags: ["Cliente"],
         security: [["bearerAuth" => []]],
@@ -181,7 +185,7 @@ readonly final class ClienteController
     }
 
     #[OA\Delete(
-        path: "/api/v1/administrador/cliente/{id}",
+        path: "/api/v1/cliente/{id}",
         summary: "Remover cliente",
         tags: ["Cliente"],
         security: [["bearerAuth" => []]],
@@ -209,5 +213,25 @@ readonly final class ClienteController
         $cliente = Cliente::findOrFail($id);
         $clienteRemovido = $service->delete($cliente);
         return response()->json($clienteRemovido);
+    }
+
+    public function atualizarEndereco(
+        Cliente $cliente,
+        EnderecoRequest $request,
+        AtualizarEnderecoDoCliente $servico
+    ): JsonResponse {
+        return response()->json(
+            $servico->atualizar($cliente, $request->validated())
+        );
+    }
+
+    public function atualizarContatos(
+        Cliente $cliente,
+        ContatoRequest $request,
+        AtualizarContatosDoCliente $servico
+    ): JsonResponse {
+        return response()->json(
+            $servico->atualizarContatos($cliente, $request->validated())
+        );
     }
 }

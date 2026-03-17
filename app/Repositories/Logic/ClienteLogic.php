@@ -51,6 +51,7 @@ class ClienteLogic implements ClienteContract
         $cliente->nome = $dto->getNome();
         $cliente->email = $dto->getEmail();
         $cliente->documento = $dto->getDocumento();
+        $cliente->data_nascimento = $dto->getDataNascimento();
         $cliente->save();
 
         return $cliente->refresh();

@@ -14,7 +14,7 @@ use Tests\TestCase;
 class AutenticacaoControllerTest extends TestCase
 {
     #[Test]
-    public function fluxo_login_me_e_logout()
+    public function fluxo_login_me_e_logout(): void
     {
         $email = $this->faker->email;
         $senha = $this->faker->password;
@@ -45,7 +45,7 @@ class AutenticacaoControllerTest extends TestCase
     }
 
     #[Test]
-    public function gerar_pin_validar_e_alterar_senha()
+    public function gerar_pin_validar_e_alterar_senha(): void
     {
         Mail::fake();
 
@@ -54,7 +54,6 @@ class AutenticacaoControllerTest extends TestCase
 
         $resp = $this->postJson('api/v1/administrador/gerar-pin', ['email' => $email]);
         $resp->assertStatus(200);
-
         Mail::assertSent(PinRecuperacaoMail::class, function ($mail) use ($email) {
             return $mail->hasTo($email);
         });

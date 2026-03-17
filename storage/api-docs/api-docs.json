@@ -268,13 +268,13 @@
                 }
             }
         },
-        "/api/v1/administrador/cliente": {
+        "/api/v1/cliente": {
             "get": {
                 "tags": [
                     "Cliente"
                 ],
                 "summary": "Lista clientes com filtros e paginação",
-                "operationId": "eed1c7879af6b5069b8cd1a2d00da070",
+                "operationId": "3974b5b9a0a0e69c065617e466e823ab",
                 "parameters": [
                     {
                         "name": "nome",
@@ -348,7 +348,7 @@
                     "Cliente"
                 ],
                 "summary": "Cadastrar novo cliente",
-                "operationId": "7f8c1bcf1633dc05639af91aa807ce33",
+                "operationId": "629991b54b57b531321bb5c725aed199",
                 "requestBody": {
                     "description": "Dados para criação do cliente",
                     "required": true,
@@ -385,13 +385,13 @@
                 ]
             }
         },
-        "/api/v1/administrador/cliente/{id}": {
+        "/api/v1/cliente/{id}": {
             "get": {
                 "tags": [
                     "Cliente"
                 ],
                 "summary": "Busca cliente por ID",
-                "operationId": "347bc5c2aa305f8f881c1e58fd5834f9",
+                "operationId": "35eae00678cdd5da60cb4c2fc3c5b179",
                 "parameters": [
                     {
                         "name": "id",
@@ -431,7 +431,7 @@
                     "Cliente"
                 ],
                 "summary": "Atualizar cliente",
-                "operationId": "a6a3b459448f68d8010246d4c61a4a56",
+                "operationId": "f4c28ed0242f84aeb90c0fd05728f614",
                 "parameters": [
                     {
                         "name": "id",
@@ -485,7 +485,7 @@
                     "Cliente"
                 ],
                 "summary": "Remover cliente",
-                "operationId": "fc8c281734bbefb49e67c21f945f1716",
+                "operationId": "e052e516e3f4c98e4651c011907e1907",
                 "parameters": [
                     {
                         "name": "id",
@@ -1404,17 +1404,26 @@
             },
             "Contato": {
                 "required": [
+                    "nome",
                     "tipo",
                     "valor"
                 ],
                 "properties": {
+                    "nome": {
+                        "type": "string",
+                        "example": "João da Silva"
+                    },
                     "tipo": {
                         "type": "string",
-                        "example": "telefone"
+                        "example": "TELEFONE"
                     },
                     "valor": {
                         "type": "string",
                         "example": "(11)99999-9999"
+                    },
+                    "preferencial": {
+                        "type": "boolean",
+                        "example": true
                     }
                 },
                 "type": "object"
@@ -1425,8 +1434,7 @@
                     "logradouro",
                     "numero",
                     "bairro",
-                    "cidade",
-                    "pais"
+                    "cidade"
                 ],
                 "properties": {
                     "cep": {
@@ -1453,10 +1461,6 @@
                     "cidade": {
                         "type": "string",
                         "example": "São Paulo"
-                    },
-                    "pais": {
-                        "type": "string",
-                        "example": "Brasil"
                     }
                 },
                 "type": "object"

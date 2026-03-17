@@ -15,6 +15,12 @@ Route::middleware('auth:administrador')->group(function ($router) {
     $router->put('cliente/{id}', [ClienteController::class, 'update']);
     $router->delete('cliente/{id}', [ClienteController::class, 'destroy']);
 
+    // Endereço
+    $router->put('cliente/{cliente}/endereco', [ClienteController::class, 'atualizarEndereco']);
+
+    // Contatos
+    $router->put('cliente/{cliente}/contatos', [ClienteController::class, 'atualizarContatos']);
+
     $router->get('pet', [PetController::class, 'index']);
     $router->post('cliente/{cliente}/pet', [PetController::class, 'store']);
     $router->get('pet/{id}', [PetController::class, 'show']);

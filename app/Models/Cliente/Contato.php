@@ -15,12 +15,15 @@ class Contato extends Model
     protected $table = 'contatos';
 
     protected $fillable = [
+        'nome',
         'tipo',
-        'valor'
+        'valor',
+        'preferencial'
     ];
 
     protected $casts = [
         'tipo' => ClienteTipoContatoEnum::class,
+        'preferencial' => 'boolean',
     ];
 
     public function cliente(): BelongsTo
