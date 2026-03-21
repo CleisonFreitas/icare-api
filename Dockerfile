@@ -3,8 +3,7 @@ FROM php:8.4-fpm-alpine
 ARG UID=1000
 ARG GID=1000
 
-RUN addgroup -g ${GID} app \
- && adduser -D -u ${UID} -G app app
+RUN addgroup -g ${GID:-1000} app && adduser -D -u ${UID:-1000} -G app app
 
 RUN apk add --no-cache \
     bash git curl \
@@ -32,8 +31,9 @@ WORKDIR /var/www
 COPY . .
 
 RUN mkdir -p storage bootstrap/cache \
-    && chown -R www-data:www-data storage bootstrap/cache
+    && chown -R app:app /var/www \
+    && chmod -R 775 storage bootstrap/cache
 
-USER www-data
+USER app
 
 CMD ["php-fpm"]

@@ -2,10 +2,33 @@
 
 set -e
 
+# Função para aguardar MySQL
+wait_for_mysql() {
+  echo "⏳ Aguardando MySQL..."
+  until docker compose exec -T mysql mysql -u root -p$DB_PASSWORD -e "SELECT 1" > /dev/null 2>&1; do
+    sleep 1
+  done
+  echo "✅ MySQL pronto!"
+}   
+
+# Função para aguardar Redis
+wait_for_redis() {
+  echo "⏳ Aguardando Redis..."
+  until docker compose exec -T redis redis-cli ping | grep -q PONG; do
+    sleep 1
+  done
+  echo "✅ Redis pronto!"
+}
+
 # Ir para a raiz do projeto
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 cd "$PROJECT_ROOT"
+
+HOST_UID=$(id -u)
+HOST_GID=$(id -g)
+export HOST_UID
+export HOST_GID
 
 echo "🚀 Preparando ambiente do projeto..."
 
@@ -37,10 +60,11 @@ fi
 
 echo "🐳 Subindo containers..."
 
-docker compose up -d --build
+docker compose build --no-cache && docker compose up -d
 
 echo "⏳ Aguardando containers..."
-sleep 5
+wait_for_mysql
+wait_for_redis
 
 echo "📦 Instalando dependências..."
 
@@ -61,6 +85,29 @@ docker compose exec app php artisan key:generate
 echo "🗄 Rodando migrations..."
 
 docker compose exec app php artisan migrate --force
+
+############################################
+# Rodar seeders
+############################################
+
+echo "🌱 Rodando seeders..."
+
+docker compose exec app php artisan db:seed --force
+
+############################################
+# Criar link simbólico para storage
+############################################
+
+echo "🔗 Criando link simbólico para storage..."
+
+docker compose exec app php artisan storage:link
+
+if command -v npm > /dev/null 2>&1; then
+  echo "📦 Instalando dependências do frontend..."
+  npm install
+  echo "🏗 Construindo assets..."
+  npm run build
+fi
 
 ############################################
 # Gerar Swagger
