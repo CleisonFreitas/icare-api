@@ -4,11 +4,14 @@ namespace Tests\Feature\Controllers;
 
 use App\Models\Cliente\Cliente;
 use App\Models\Cliente\Pet;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 final class PetControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
     #[Test]
     public function index(): void
     {

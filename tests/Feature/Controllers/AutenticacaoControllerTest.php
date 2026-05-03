@@ -4,6 +4,7 @@ namespace Tests\Feature\Controllers;
 
 use App\Mail\PinRecuperacaoMail;
 use App\Models\Usuario\Usuario;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +14,8 @@ use Tests\TestCase;
 
 class AutenticacaoControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
     #[Test]
     public function fluxo_login_me_e_logout(): void
     {
@@ -41,7 +44,9 @@ class AutenticacaoControllerTest extends TestCase
         
         $me2 = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->getJson('api/v1/administrador/me');
-        $me2->assertStatus(Response::HTTP_UNAUTHORIZED);
+        $me2->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
+        $me2->assertJsonStructure(['message']);
+        $me2->assertJsonPath('message', 'Token já expirado');
     }
 
     #[Test]

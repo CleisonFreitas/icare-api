@@ -20,6 +20,7 @@ class ContatoFactory extends Factory
             : $this->faker->phoneNumber;
 
         return [
+            'nome' => $this->faker->name,
             'tipo' => $contato,
             'valor' => $valor,
             'cliente_id' => Cliente::factory()->lazy()

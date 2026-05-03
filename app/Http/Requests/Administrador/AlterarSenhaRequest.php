@@ -10,7 +10,7 @@ class AlterarSenhaRequest extends BaseRequest
     {
         return [
             'email' => 'required|email',
-            'pin' => 'required|digits:6',
+            'pin' => 'required|digits:4',
             'senha' => 'required|string|min:6|confirmed',
         ];
     }

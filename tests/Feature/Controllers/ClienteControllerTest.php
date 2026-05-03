@@ -47,6 +47,7 @@ final class ClienteControllerTest extends TestCase
     {
         $this->actingAsAdmin();
         $dados = Cliente::factory()->make()->toArray();
+        data_set($dados, 'senha', $this->faker->password);
         $dadosEndereco = Endereco::factory()->make()->toArray();
         $dadosContato = Contato::factory()->count(2)->make()->toArray();
         data_set($dados, 'endereco', $dadosEndereco);

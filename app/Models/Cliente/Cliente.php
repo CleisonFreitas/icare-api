@@ -19,7 +19,8 @@ class Cliente extends Authenticatable
     protected $table = 'clientes';
 
     protected $casts = [
-        'senha' => 'hashed'
+        'senha' => 'hashed',
+        'data_nascimento' => 'date'
     ];
 
     protected $hidden = [

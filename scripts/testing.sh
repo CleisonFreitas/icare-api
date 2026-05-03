@@ -18,7 +18,7 @@ cp .env.testing.example .env.testing
 DB_USERNAME=$(grep DB_USERNAME .env | cut -d '=' -f2)
 DB_PASSWORD=$(grep DB_PASSWORD .env | cut -d '=' -f2)
 
-sed -i "s/^DB_USERNAME=.*/DB_USERNAME=$DB_USERNAME/" .env.testing
+sed -i "s/^DB_USERNAME=.*/DB_USERNAME=root/" .env.testing
 sed -i "s/^DB_PASSWORD=.*/DB_PASSWORD=$DB_PASSWORD/" .env.testing
 
 echo "Gerando APP_KEY de teste..."
